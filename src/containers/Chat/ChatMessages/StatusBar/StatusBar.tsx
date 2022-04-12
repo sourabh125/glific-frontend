@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 
 import { getUserSession } from 'services/AuthService';
-import { BSPBALANCE } from 'graphql/queries/Organization';
+import { BSPBALANCE, GET_QUALITY_RATING } from 'graphql/queries/Organization';
 import styles from './StatusBar.module.css';
 
 export interface StatusBarProps {}
@@ -15,6 +15,7 @@ export const StatusBar: React.FC<StatusBarProps> = () => {
     variables,
     fetchPolicy: 'cache-only',
   });
+  const { data: qualityRating } = useQuery(GET_QUALITY_RATING, {});
 
   if (!balanceData) {
     return null;
@@ -32,12 +33,12 @@ export const StatusBar: React.FC<StatusBarProps> = () => {
   }
 
   // TODOS: need to implement this once backend implements this feature
-  // const limitReached = false;
+  const limitReached = false;
 
-  // if (limitReached) {
-  //   statusMessage =
-  //     'You have reached today’s rate limit for sending HSM templates to your users. Your rate limit will be refreshed tomorrow. Please check again later.';
-  // }
+  if (limitReached) {
+    statusMessage =
+      'You have reached today’s rate limit for sending HSM templates to your users. Your rate limit will be refreshed tomorrow. Please check again later.';
+  }
 
   if (statusMessage) {
     return (

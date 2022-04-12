@@ -143,3 +143,13 @@ export const GET_ORGANIZATION_PHONE = gql`
     }
   }
 `;
+
+export const GET_QUALITY_RATING = gql`
+  query QualityRating {
+    qualityRating {
+      currentLimit
+      event
+      previousLimit
+    }
+  }
+`;
